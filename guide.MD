@@ -2,7 +2,7 @@
 
 ### Connecting to the Lacework API
 
-In order to communicate with the Lacework API, users need a Bearer access token. An API key is needed to
+To communicate with the Lacework API, users need a Bearer access token. An API key is needed to
 create a POST request to the access token endpoint to retrieve an access token. To create an API key, please
 navigate to settings within the Lacework UI. Under settings, click the API Keys section and then click the create
 new button located on the top left. After creating a new API key, download it, and be sure to store it in a safe space as you're going
