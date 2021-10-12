@@ -2,13 +2,12 @@
 
 ### Connecting to the Lacework API
 
-To communicate with the Lacework application programming interface (API), users need a Bearer access token. An API key is needed to
-create a POST request to the access token endpoint to retrieve an access token. To create an API key,
-navigate to **Settings** within the Lacework user interface (UI). Under **Settings**, click the **API Keys** section and then click the **Create
-new** button located on the top left. After creating a new API key, download it and store it in a safe space because you will need it to create a Bearer access token, which grants temporary access to the Lacework API. For more documentation
+Users need a bearer access token to communicate with the Lacework application programming interface (API). To retrieve a bearer access token, users need an API key to create a POST request to the access token endpoint. To create an API key,
+navigate to **Settings** within the Lacework Console. Under **Settings**, click the **API keys** section and then click **Create
+new** located on the top left. After creating a new API key, download and store it in a safe space because you will need it to create a bearer access token, which grants temporary access to the Lacework API. For more documentation
 on generating API keys, visit our docs [here](https://support.lacework.com/hc/en-us//articles/360011403853).
 
-Once you download your API key, you can make a POST request to retrieve a Bearer access token.
+Once you download your API key, you can make a POST request to retrieve a bearer access token.
 Below is a sample curl request used to fetch an access token.
 
 `curl --location --request POST 'https://YourLacework.lacework.net/api/v2/access/tokens' \
@@ -19,18 +18,18 @@ Below is a sample curl request used to fetch an access token.
 "expiryTime": 86400
 }'`
 
-Below is a sample response from access tokens endpoint.
+Below is a sample response from the access token's endpoint.
 
 `{
 "expiresAt": "2021-09-28T21:57:15.494Z",
 "token": "<redacted>"
 }`
 
-For the sake of this example and security purposes, I have redacted the actual token returned from the response.
+For security purposes, we redacted the actual token returned from the response.
 
-### Key Concepts
+### Key concepts
 
-* You need to first create an API key within the Lacework UI to later create a Bearer access token.
+* You need to first create an API key within the Lacework UI to later create a bearer access token.
 * Bearer access tokens provide *temporary* access to the Lacework API. This means that the tokens have an *expiration*.
 * To determine a token's expiration, look at the response body from the POST request.
 * When making a POST request to the access token's endpoint, you can specify the token's expiry. The max value is 86,400 seconds, which is 24 hours.
@@ -40,7 +39,7 @@ For the sake of this example and security purposes, I have redacted the actual t
 ### Recommendations
 * Store the API key in a secure place and do not share it with others.
 * If someone else needs to access the API, they must create their own API key.
-* It's a best practice to regularly rotate API keys.
+* Regularly rotate API keys.
 
 # Queries
 
@@ -48,7 +47,7 @@ Lacework provides a query language called Lacework Query Language (LQL) to help 
 mechanism used to access said data. For more information on LQL and queries, please visit our documentation
 [here](https://support.lacework.com/hc/en-us/articles/4402301824403-LQL-Overview).
 
-### Creating Queries
+### Creating queries
 
 `curl --location --request POST 'https://YourLacework.lacework.net/api/v2/Queries' \
 --header 'Content-Type: application/json' \
@@ -59,12 +58,12 @@ mechanism used to access said data. For more information on LQL and queries, ple
 "queryText": "LW_Custom_AWS_CTA_UnauthorizedAPICall {\n     SOURCE {\n        CloudTrailRawEvents\n    }\n    FILTER {\n     EVENT:eventType::String = '\''AwsApiCall'\''\n     AND ERROR_CODE IN ('\''AccessDenied'\'', '\''Client.UnauthorizedOperation'\'')\n    }\n    return DISTINCT {\n        INSERT_ID,\n        INSERT_TIME,\n        EVENT_TIME,\n        EVENT\n    }\n}"
 }'`
 
-In this example above, we create a query to detect when an unauthorized API call is made. Please check out more examples of the kinds of queries
+In this example above, we create a query to detect when an unauthorized API call is made. View more examples of the kinds of queries
 you can write [here](https://support.lacework.com/hc/en-us/articles/1500006140722-Example-LQL-Queries-and-Policies).
 
-### Retrieving Queries
+### Retrieving queries
 
-You can verify that you successfully created the query above by retrieving it. Below please find a sample CURL request
+You can verify that you successfully created the query above by retrieving it. Below is a sample curl request
 to retrieve the newly created query.
 
 `curl --location --request GET 'https://YourLacework.lacework.net/api/v2/Queries/LW_Custom_AWS_CTA_UnauthorizedAPICall' \
@@ -72,9 +71,9 @@ to retrieve the newly created query.
 --header 'Authorization: Bearer <redacted>' \
 --data-raw ''`
 
-### Executing Queries
+### Executing queries
 
-To execute a query, please run the following command below.
+To execute a query, run the following command.
 
 `curl --location --request POST 'https://YourLacework.lacework.net/api/v2/Queries/LW_Custom_AWS_CTA_UnauthorizedAPICall/execute' \
 --header 'Content-Type: application/json' \
@@ -89,8 +88,8 @@ To execute a query, please run the following command below.
 
 # Policies
 
-Policies are a mechanism used to add annotated metadata to queries for improving the context of alerts, reports,
-and information displayed in the Lacework Console. For more information policies, please visit our support site
+Policies are a mechanism used to add annotated metadata to queries to improve the context of alerts, reports,
+and information displayed in the Lacework Console. For more information policies, visit our support site
 [here](https://support.lacework.com/hc/en-us/articles/360061720914-Create-Queries-and-Custom-Policies-Using-LQL).
 
 ### Creating Custom Policies
