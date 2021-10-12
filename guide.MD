@@ -2,14 +2,13 @@
 
 ### Connecting to the Lacework API
 
-To communicate with the Lacework API, users need a Bearer access token. An API key is needed to
-create a POST request to the access token endpoint to retrieve an access token. To create an API key, please
-navigate to settings within the Lacework UI. Under settings, click the API Keys section and then click the create
-new button located on the top left. After creating a new API key, download it, and be sure to store it in a safe space as you're going
-to need it to create a Bearer access token which grants temporary access to the Lacework API. For more documentation
+To communicate with the Lacework application programming interface (API), users need a Bearer access token. An API key is needed to
+create a POST request to the access token endpoint to retrieve an access token. To create an API key,
+navigate to **Settings** within the Lacework user interface (UI). Under **Settings**, click the **API Keys** section and then click the **Create
+new** button located on the top left. After creating a new API key, download it and store it in a safe space because you will need it to create a Bearer access token, which grants temporary access to the Lacework API. For more documentation
 on generating API keys, visit our docs [here](https://support.lacework.com/hc/en-us//articles/360011403853).
 
-Now that you have downloaded your API key, you're ready to make a POST request to retrieve a Bearer access token.
+Once you download your API key, you can make a POST request to retrieve a Bearer access token.
 Below is a sample curl request used to fetch an access token.
 
 `curl --location --request POST 'https://YourLacework.lacework.net/api/v2/access/tokens' \
@@ -20,7 +19,7 @@ Below is a sample curl request used to fetch an access token.
 "expiryTime": 86400
 }'`
 
-Below find a sample response from access tokens endpoint.
+Below is a sample response from access tokens endpoint.
 
 `{
 "expiresAt": "2021-09-28T21:57:15.494Z",
@@ -33,15 +32,15 @@ For the sake of this example and security purposes, I have redacted the actual t
 
 * You need to first create an API key within the Lacework UI to later create a Bearer access token.
 * Bearer access tokens provide *temporary* access to the Lacework API. This means that the tokens have an *expiration*.
-* You can figure out the expiration of a token by looking at the response body from the POST request.
-* When making a POST request to the access tokens endpoint, you can specify the expiry of the token. The max value is 86400 seconds which is 24 hours.
-* When making a POST request to the access tokens endpoint you need two pieces of information -- The API key ID and the API key secret.
+* To determine a token's expiration, look at the response body from the POST request.
+* When making a POST request to the access token's endpoint, you can specify the token's expiry. The max value is 86,400 seconds, which is 24 hours.
+* When making a POST request to the access token's endpoint, you need two pieces of information&mdash;the API key ID and the API key secret.
 
 
 ### Recommendations
-* Store the API Key in a secure place and do not share it with others.
-* If someone else needs to access the API, have them create their own API Key.
-* As a best practice, it's good to regularly rotate API Keys.
+* Store the API key in a secure place and do not share it with others.
+* If someone else needs to access the API, they must create their own API key.
+* It's a best practice to regularly rotate API keys.
 
 # Queries
 
