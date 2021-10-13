@@ -119,7 +119,7 @@ A policy for the created query can now be created using the following curl:
 ***Note:*** An alert profile is the metadata defining how we display events. The only alert profile we currently support is
 the one specified in the example above. We are working on supporting other alert profiles to further customizations.
 
-### Retrieving custom policies
+### Retrieve custom policies
 
 Now you can fetch the recently created policy by the policyId that is returned in the response body using the following curl:
 
