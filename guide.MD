@@ -4,7 +4,7 @@
 
 Users need a bearer access token to communicate with the Lacework API. The bearer access token grants temporary access to the Lacework API. To retrieve a token, users need an API key to create a POST request to the bearer access token endpoint. To create an API key,
 navigate to **Settings** within the Lacework Console. Under **Settings**, click the **API keys** section and then click **Create
-new** located on the top left. 
+new** on the top left of the page. 
 
 After creating a new API key, download and store it in a safe space. For more documentation
 on generating API keys, read our [Generate API access keys and tokens](https://support.lacework.com/hc/en-us//articles/360011403853) support article.
@@ -51,6 +51,8 @@ mechanisms used to access said data. For more information on LQL and queries, se
 
 ### Create queries
 
+In the example below, we create a query to detect when an unauthorized API call is made. View more query examples in the [Example LQL queries and policies](https://support.lacework.com/hc/en-us/articles/1500006140722-Example-LQL-Queries-and-Policies) support article. 
+
 `curl --location --request POST 'https://YourLacework.lacework.net/api/v2/Queries' \
 --header 'Content-Type: application/json' \
 --header 'Authorization: Bearer <redacted>' \
@@ -59,8 +61,6 @@ mechanisms used to access said data. For more information on LQL and queries, se
 "queryId": "LW_Custom_AWS_CTA_UnauthorizedAPICall",
 "queryText": "LW_Custom_AWS_CTA_UnauthorizedAPICall {\n     SOURCE {\n        CloudTrailRawEvents\n    }\n    FILTER {\n     EVENT:eventType::String = '\''AwsApiCall'\''\n     AND ERROR_CODE IN ('\''AccessDenied'\'', '\''Client.UnauthorizedOperation'\'')\n    }\n    return DISTINCT {\n        INSERT_ID,\n        INSERT_TIME,\n        EVENT_TIME,\n        EVENT\n    }\n}"
 }'`
-
-In this example above, we create a query to detect when an unauthorized API call is made. View more query examples in the [Example LQL queries and policies](https://support.lacework.com/hc/en-us/articles/1500006140722-Example-LQL-Queries-and-Policies) support article.
 
 ### Retrieve queries
 
