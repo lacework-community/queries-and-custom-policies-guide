@@ -1,8 +1,8 @@
 # Authentication
 
-### Connecting to the Lacework API
+### Connect to the Lacework application programming interface (API)
 
-Users need a bearer access token to communicate with the Lacework application programming interface (API). The bearer access token grants temporary access to the Lacework API. To retrieve a token, users need an API key to create a POST request to the bearer access token endpoint. To create an API key,
+Users need a bearer access token to communicate with the Lacework API. The bearer access token grants temporary access to the Lacework API. To retrieve a token, users need an API key to create a POST request to the bearer access token endpoint. To create an API key,
 navigate to **Settings** within the Lacework Console. Under **Settings**, click the **API keys** section and then click **Create
 new** located on the top left. 
 
@@ -10,7 +10,7 @@ After creating a new API key, download and store it in a safe space. For more do
 on generating API keys, read our [Generate API access keys and tokens](https://support.lacework.com/hc/en-us//articles/360011403853) support article.
 
 Once you download your API key, you can make a POST request to retrieve a bearer access token.
-Below is a sample curl request used to fetch a bearer access token.
+Below is a sample curl request used to fetch a bearer access token:
 
 `curl --location --request POST 'https://YourLacework.lacework.net/api/v2/access/tokens' \
 --header 'X-Lw-Uaks: <Insert Secret from API Key>' \
@@ -20,7 +20,7 @@ Below is a sample curl request used to fetch a bearer access token.
 "expiryTime": 86400
 }'`
 
-Below is a sample response from the bearer access token's endpoint.
+Below is a sample response from the bearer access token's endpoint:
 
 `{
 "expiresAt": "2021-09-28T21:57:15.494Z",
@@ -34,8 +34,8 @@ For security purposes, we redacted the actual token returned from the response.
 * You must first create an API key within the Lacework Console to later create a bearer access token.
 * Bearer access tokens provide *temporary* access to the Lacework API. This means that the tokens have an *expiration*.
 * To determine a token's expiration, look at the response body from the POST request.
-* When making a POST request to the access token's endpoint, you can specify the token's expiry. The max value is 86,400 seconds, which is 24 hours.
-* When making a POST request to the access token's endpoint, you need two pieces of information&mdash;the API key ID and the API key secret.
+* You need the API key ID and the API key secret to make a POST request to the access token's endpoint.
+* You can specify the token's expiry when you make a POST request to the access token's endpoint. The max value is 86,400 seconds, which is 24 hours.
 
 
 ### Recommendations
@@ -46,10 +46,10 @@ For security purposes, we redacted the actual token returned from the response.
 # Queries
 
 Lacework provides a query language called Lacework Query Language (LQL) to help with data access. Queries are the
-mechanisms used to access said data. For more information on LQL and queries, visit our
+mechanisms used to access said data. For more information on LQL and queries, see the
 [LQL overview](https://support.lacework.com/hc/en-us/articles/4402301824403-LQL-Overview).
 
-### Creating queries
+### Create queries
 
 `curl --location --request POST 'https://YourLacework.lacework.net/api/v2/Queries' \
 --header 'Content-Type: application/json' \
@@ -60,21 +60,21 @@ mechanisms used to access said data. For more information on LQL and queries, vi
 "queryText": "LW_Custom_AWS_CTA_UnauthorizedAPICall {\n     SOURCE {\n        CloudTrailRawEvents\n    }\n    FILTER {\n     EVENT:eventType::String = '\''AwsApiCall'\''\n     AND ERROR_CODE IN ('\''AccessDenied'\'', '\''Client.UnauthorizedOperation'\'')\n    }\n    return DISTINCT {\n        INSERT_ID,\n        INSERT_TIME,\n        EVENT_TIME,\n        EVENT\n    }\n}"
 }'`
 
-In this example above, we create a query to detect when an unauthorized API call is made. View more query examples [here](https://support.lacework.com/hc/en-us/articles/1500006140722-Example-LQL-Queries-and-Policies).
+In this example above, we create a query to detect when an unauthorized API call is made. View more query examples in the [Example LQL queries and policies](https://support.lacework.com/hc/en-us/articles/1500006140722-Example-LQL-Queries-and-Policies) support article.
 
-### Retrieving queries
+### Retrieve queries
 
 You can verify that you successfully created the query above by retrieving it. Below is a sample curl request
-to retrieve the newly created query.
+to retrieve the newly created query:
 
 `curl --location --request GET 'https://YourLacework.lacework.net/api/v2/Queries/LW_Custom_AWS_CTA_UnauthorizedAPICall' \
 --header 'Content-Type: application/json' \
 --header 'Authorization: Bearer <redacted>' \
 --data-raw ''`
 
-### Executing queries
+### Execute queries
 
-To execute a query, run the following command.
+To execute a query, run the following command:
 
 `curl --location --request POST 'https://YourLacework.lacework.net/api/v2/Queries/LW_Custom_AWS_CTA_UnauthorizedAPICall/execute' \
 --header 'Content-Type: application/json' \
@@ -89,13 +89,13 @@ To execute a query, run the following command.
 
 # Policies
 
-Policies are a mechanism used to add annotated metadata to queries to improve the context of alerts, reports,
-and information displayed in the Lacework Console. For more information policies, visit our
-[support site](https://support.lacework.com/hc/en-us/articles/360061720914-Create-Queries-and-Custom-Policies-Using-LQL).
+Policies are mechanisms used to add annotated metadata to queries to improve the context of alerts, reports,
+and information displayed in the Lacework Console. For more information on policies, see
+[Create queries and custom policies using LQL](https://support.lacework.com/hc/en-us/articles/360061720914-Create-Queries-and-Custom-Policies-Using-LQL).
 
-### Creating Custom Policies
+### Create custom policies
 
-A policy for the created query can now be created using the following curl.
+A policy for the created query can now be created using the following curl:
 
 `curl --location --request POST 'https://YourLacework.lacework.net/api/v2/Policies' \
 --header 'Content-Type: application/json' \
@@ -116,15 +116,15 @@ A policy for the created query can now be created using the following curl.
 }
 '`
 
-***Note:*** An Alert profile is the metadata defining how we display events. The only alert profile we currently support is
-the one specified in the example. We are actively working on supporting other alert profiles to further customizations.
+***Note:*** An alert profile is the metadata defining how we display events. The only alert profile we currently support is
+the one specified in the example above. We are working on supporting other alert profiles to further customizations.
 
-### Retrieving Custom Policies
+### Retrieving custom policies
 
-Now you can fetch the recently created policy by the policyId that is returned in the response body using the following curl.
+Now you can fetch the recently created policy by the policyId that is returned in the response body using the following curl:
 
 `curl --location --request GET 'https://YourLacework.lacework.net/api/v2/Policies/YourLacework-lwcustom-4567' \
 --header 'Authorization: Bearer <redacted>'`
 
-***Tip:*** The policyId for the get request is prefixed by your Lacework account name.
+***Tip:*** The policyId for the GET request is prefixed by your Lacework account name.
 
