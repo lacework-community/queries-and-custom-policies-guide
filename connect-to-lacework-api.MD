@@ -1,5 +1,5 @@
 
-## Connect to the Lacework application programming interface (API)
+# Connect to the Lacework application programming interface (API)
 
 ### Overview
 
