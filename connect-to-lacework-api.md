@@ -1,8 +1,6 @@
 
 # Connect to the Lacework application programming interface (API)
 
-### Overview
-
 Users need a bearer access token to communicate with the Lacework API. The bearer access token grants *temporary* access to the Lacework API. This means that the tokens have an *expiration*. To retrieve a token, users need an API key to create a POST request to the bearer access token endpoint. 
 
 ### Steps 
