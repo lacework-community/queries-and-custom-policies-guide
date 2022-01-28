@@ -4,7 +4,9 @@ Lacework provides a query language called Lacework Query Language (LQL) to help 
 mechanisms used to access said data. For more information on LQL and queries, see the
 [LQL overview](https://support.lacework.com/hc/en-us/articles/4402301824403-LQL-Overview).
 
-### Create queries
+## Steps 
+
+### 1. Create query
 
 In the example below, we create a query to detect when an unauthorized API call is made. View more query examples in the [Example LQL queries and policies](https://support.lacework.com/hc/en-us/articles/1500006140722-Example-LQL-Queries-and-Policies) support article. 
 
@@ -17,7 +19,7 @@ In the example below, we create a query to detect when an unauthorized API call 
 "queryText": "LW_Custom_AWS_CTA_UnauthorizedAPICall {\n     SOURCE {\n        CloudTrailRawEvents\n    }\n    FILTER {\n     EVENT:eventType::String = '\''AwsApiCall'\''\n     AND ERROR_CODE IN ('\''AccessDenied'\'', '\''Client.UnauthorizedOperation'\'')\n    }\n    return DISTINCT {\n        INSERT_ID,\n        INSERT_TIME,\n        EVENT_TIME,\n        EVENT\n    }\n}"
 }'`
 
-### Retrieve queries
+### 2. Retrieve query
 
 You can verify that you successfully created the query above by retrieving it. Below is a sample curl request
 to retrieve the newly created query:
@@ -27,7 +29,7 @@ to retrieve the newly created query:
 --header 'Authorization: Bearer <redacted>' \
 --data-raw ''`
 
-### Execute queries
+### 3. Execute queries
 
 To execute a query, run the following command:
 
@@ -48,7 +50,7 @@ Policies are mechanisms used to add annotated metadata to queries to improve the
 and information displayed in the Lacework Console. For more information on policies, see
 [Create queries and custom policies using LQL](https://support.lacework.com/hc/en-us/articles/360061720914-Create-Queries-and-Custom-Policies-Using-LQL).
 
-### Create custom policies
+### 1. Create custom policies
 
 A policy for the created query can now be created using the following curl:
 
@@ -74,7 +76,7 @@ A policy for the created query can now be created using the following curl:
 ***Note:*** An alert profile is the metadata defining how we display events. The only alert profile we currently support is
 the one specified in the example above. We are working on supporting other alert profiles to further customizations.
 
-### Retrieve custom policies
+### 2. Retrieve custom policies
 
 Now you can fetch the recently created policy by the policyId that is returned in the response body using the following curl:
 
