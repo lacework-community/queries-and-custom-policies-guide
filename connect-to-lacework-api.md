@@ -7,17 +7,17 @@ Users need a bearer access token to communicate with the Lacework API. The beare
 
 #### 1. Create an API key
 
-* 1a. To create an API key, navigate to **Settings** within the Lacework Console. 
-* 1b. Under **Settings**, click the **API keys** section 
-* 1c. Click **Create new** on the top left of the page. 
-* 1d. After creating a new API key, download and store it in a safe space. For more documentation
+* a. To create an API key, navigate to **Settings** within the Lacework Console. 
+* b. Under **Settings**, click the **API keys** section 
+* c. Click **Create new** on the top left of the page. 
+* d. After creating a new API key, download and store it in a safe space. For more documentation
 on generating API keys, read our [Generate API access keys and tokens](https://support.lacework.com/hc/en-us//articles/360011403853) support article.
 
 #### 2. Retrieve a bearer access token
 
 You need the API key ID and the API key secret to make a POST request to the access token's endpoint. Once you download your API key, you can make a POST request to retrieve a bearer access token. 
 
-* 2a. Use the sample curl request below to fetch a bearer access token. You can specify the token's expiry by replacing the number next to `expiryTime`. The max value is 86,400 seconds, which is 24 hours.
+* a. Use the sample curl request below to fetch a bearer access token. You can specify the token's expiry by replacing the number next to `expiryTime`. The max value is 86,400 seconds, which is 24 hours.
 
 `curl --location --request POST 'https://YourLacework.lacework.net/api/v2/access/tokens' \
 --header 'X-Lw-Uaks: <Insert Secret from API Key>' \
@@ -27,7 +27,7 @@ You need the API key ID and the API key secret to make a POST request to the acc
 "expiryTime": 86400
 }'`
 
-* 2b. You will receive a response from the bearer access token's endpoint, similar to the one below. For security purposes, we redacted the actual token returned from the response.
+* b. You will receive a response from the bearer access token's endpoint, similar to the one below. For security purposes, we redacted the actual token returned from the response.
 
 `{
 "expiresAt": "2021-09-28T21:57:15.494Z",
